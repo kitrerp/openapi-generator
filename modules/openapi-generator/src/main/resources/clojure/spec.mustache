@@ -1,18 +1,19 @@
 {{=< >=}}(ns <package>.<classname>
   (:require [clojure.spec.alpha :as s]
             [spec-tools.data-spec :as ds]
-            <#models><#model><#vars><^isContainer><^vendorExtensions.x-baseSpec>[<package>.<complexType> :refer :all]
-            </vendorExtensions.x-baseSpec></isContainer><#isContainer><^vendorExtensions.x-baseSpec>[<package>.<complexType> :refer :all]
+            <#models><#model><#vars><^isContainer><^vendorExtensions.x-baseSpec><#complexType>[<package>.<complexType> :refer :all]</complexType>
+            </vendorExtensions.x-baseSpec></isContainer><#isContainer><^vendorExtensions.x-baseSpec><#complexType>[<package>.<complexType> :refer :all]</complexType>
             </vendorExtensions.x-baseSpec></isContainer></vars></model></models>)
   (:import (java.io File)))
 
 <#models><#model>
+(declare <classname>-data <classname>)
 (def <classname>-data
   {<#vars>
    (ds/<#required>req</required><^required>opt</required> :<name>) <datatype></vars>
    })
 
-(def <classname>-spec
+(def <classname>
   (ds/spec
     {:name ::<classname>
      :spec <classname>-data}))

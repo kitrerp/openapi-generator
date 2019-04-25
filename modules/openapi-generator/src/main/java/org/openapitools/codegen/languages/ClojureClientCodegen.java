@@ -149,11 +149,13 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
         }
 
         // If it's a type we defined, we want to append the spec suffix
+        return super.getTypeDeclaration(p);
+        /*
         if (!typeMapping.containsKey(super.getSchemaType(p))) {
             return super.getTypeDeclaration(p) + "-spec";
         } else {
             return super.getTypeDeclaration(p);
-        }
+        }*/
     }
 
     @Override
@@ -169,7 +171,7 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String toModelName(String name) {
-        return dashize(name);
+        return underscore(name).replaceAll("[_ /]", "-");
     }
 
     @Override
@@ -279,7 +281,7 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String sanitizeTag(String tag) {
-        return tag.replaceAll("[^a-zA-Z_]+", "_");
+        return tag.replaceAll("[^a-zA-Z0-9_]+", "_");
     }
 
     @Override
