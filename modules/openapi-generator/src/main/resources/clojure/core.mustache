@@ -19,7 +19,8 @@
    :decode-models   false
    :debug           false
    :auths           {<#authMethods>"<&name>" nil<#hasMore>
-                     </hasMore></authMethods>}})
+                     </hasMore></authMethods>}
+   :insecure?       false})
 
 (def ^:dynamic *api-context*
   "Dynamic API context to be applied in API calls."
@@ -229,7 +230,7 @@
 (defn call-api
   "Call an API by making HTTP request and return its response."
   [path method {:keys [path-params body-param content-types accepts auth-names] :as opts}]
-  (let [{:keys [debug]} *api-context*
+  (let [{:keys [debug insecure?]} *api-context*
         {:keys [req-opts query-params header-params form-params]} (auths->opts auth-names)
         query-params (merge query-params (:query-params opts))
         header-params (merge header-params (:header-params opts))
@@ -247,7 +248,8 @@
                    multipart? (assoc :multipart (-> form-params normalize-params form-params->multipart))
                    (and (not multipart?) (seq form-params)) (assoc :form-params (normalize-params form-params))
                    body-param (assoc :body (serialize body-param content-type))
-                   debug (assoc :debug true :debug-body true))
+                   debug (assoc :debug true :debug-body true)
+                   insecure? (assoc :insecure? true))
         resp (client/request req-opts)]
     (when debug
       (println "Response:")
